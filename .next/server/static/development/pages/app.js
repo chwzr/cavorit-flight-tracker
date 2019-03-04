@@ -135,32 +135,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * Takes a Path Array from API and returns a semantic and readable Array of Objects
+ * @param {*} path
+ * @returns {*} formatedPaths
+ */
 
 function pathArrayToObject(path) {
-  if (!path) {
-    // console.log("no path using fake data")
-    // return fake
-    return [];
-  }
-
-  var paths = [];
+  var formatedPaths = [];
   path.forEach(function (p) {
-    paths.push({
+    formatedPaths.push({
       time: Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["format"])(new Date(p[0] * 1000), 'HH:mm'),
       barAlt: p[3] ? p[3] : 0,
       lat: p[1],
       lng: p[2]
     });
   });
-
-  if (paths.length < 5) {// return fake
-    // return []
-  }
-
-  return paths;
+  return formatedPaths;
 }
-
-var trackPollInterval;
 
 var Flight =
 /*#__PURE__*/
@@ -190,8 +182,9 @@ function (_Component) {
   Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(Flight, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.updateFlightTrack();
-      this.trackPollInterval = setInterval(this.updateFlightTrack.bind(this), 10000);
+      this.updateFlightTrack(); //TODO: 5 or 10 secs?
+
+      this.trackPollInterval = setInterval(this.updateFlightTrack.bind(this), 5000);
     }
   }, {
     key: "componentWillUnmount",
@@ -224,7 +217,7 @@ function (_Component) {
                     trackData = pathArrayToObject(res.path);
                   } else {
                     //TODO: inject fake data here if there was no data yet else use the old data, and add a random point from fake dataset
-                    // 
+                    console.log("fake!");
                     trackData = _fake__WEBPACK_IMPORTED_MODULE_10__["default"];
                   }
                 }).then(function () {
@@ -1846,8 +1839,7 @@ function (_Component) {
         southwest: {
           lat: bounds[4],
           lng: bounds[5]
-        } // console.log(this.state.bounds, bounds)
-
+        }
       };
 
       _this.setState({
@@ -1984,8 +1976,7 @@ function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      // await this.getPositionData();
-      this.flightPollInterval = setInterval(this.updateFlightList.bind(this), 1000); // trackPollInterval = setInterval(this.updateFlightTracks.bind(this), 3000)
+      this.flightPollInterval = setInterval(this.updateFlightList.bind(this), 1000);
     }
   }, {
     key: "componentWillUnmount",

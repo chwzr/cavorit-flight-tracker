@@ -47,8 +47,6 @@ class App extends Component {
 
   }
 
-
-
   async getPositionData(){
       // get the userlocation based of the url slug .../<location> (defaults to berlin for demo reasons) 
       const locationRequest = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?&key=AIzaSyDUGpUnqLVJtzfGuH_ZqbN9eLLgA5wMEis&address=${this.props.locationSlug}`)
@@ -56,8 +54,6 @@ class App extends Component {
       const locationData = locationResponse .results[0];
       return locationData
   }
-
-
 
   async updateFlightList(){
     // get all 🚀 based on the location bounds
@@ -97,17 +93,9 @@ class App extends Component {
     return {  locationSlug};
   }
 
-
-
   componentDidMount(){
-    // await this.getPositionData();
-
     this.flightPollInterval = setInterval(this.updateFlightList.bind(this), 1000)
-    // trackPollInterval = setInterval(this.updateFlightTracks.bind(this), 3000)
-
   }
-
-  
   
   componentWillUnmount(){
     clearInterval(this.flightPollInterval)
@@ -118,12 +106,10 @@ class App extends Component {
       northeast: {lat:bounds[6], lng:bounds[7]},
       southwest: {lat:bounds[4], lng:bounds[5]}
     }
-    // console.log(this.state.bounds, bounds)
     this.setState({
       bounds: newBounds
     })
   }
-
 
   _onChildClick = (key, childProps) => {
     //sets current open info window
@@ -135,8 +121,6 @@ class App extends Component {
       openFlight: childProps.flight.icao24
     })
   }
-
-
 
   render() {
     // map flights to Map Marker DOM
@@ -178,9 +162,7 @@ class App extends Component {
             onBoundsChange={this._onBoundsChange}
             onChildClick={this._onChildClick.bind(this)}
           >
-
             {flights}
-
           </GoogleMapReact>
         </div>
       </Layout>

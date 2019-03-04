@@ -5,34 +5,24 @@ import {format} from 'date-fns';
 
 import fetch from 'isomorphic-unfetch';
 
-
+/**
+ * Takes a Path Array from API and returns a semantic and readable Array of Objects
+ * @param {*} path
+ * @returns {*} formatedPaths
+ */
 
 function pathArrayToObject(path){
-     if(!path){
-        // console.log("no path using fake data")
-        // return fake
-        return []
-    }
-    let paths = [];
+    let formatedPaths = [];
     path.forEach(p=>{
-        paths.push({
+        formatedPaths .push({
             time: format(new Date(p[0]*1000), 'HH:mm'),
             barAlt: p[3] ? p[3] : 0,
             lat: p[1],
             lng: p[2],
         })
     })
-    if(paths.length < 5){
-        // return fake
-        // return []
-    }
-    return paths
+    return formatedPaths
 }
-
-
-
-var trackPollInterval;
-
 
 class Flight extends Component {
 
@@ -40,17 +30,16 @@ class Flight extends Component {
         trackData: []
     }
 
-
     componentDidMount(){
         this.updateFlightTrack();
-        this.trackPollInterval = setInterval(this.updateFlightTrack.bind(this), 10000);
+        //TODO: 5 or 10 secs?
+        this.trackPollInterval = setInterval(this.updateFlightTrack.bind(this), 5000);
     }
 
     componentWillUnmount(){
         console.log("clearing")
         clearInterval(this.trackPollInterval)
     }
-
 
     async updateFlightTrack(){
         var trackData
@@ -59,11 +48,11 @@ class Flight extends Component {
             .then(res => res.json())
             .then(res => {
                 if(res.icao24){
-                trackData = pathArrayToObject(res.path);
+                    trackData = pathArrayToObject(res.path);
                 } else {
-                //TODO: inject fake data here if there was no data yet else use the old data, and add a random point from fake dataset
-                // 
-                trackData = fake;
+                    //TODO: inject fake data here if there was no data yet else use the old data, and add a random point from fake dataset
+                    console.log("fake!")
+                    trackData = fake;
                 }
             })
             .then(()=>{
@@ -82,14 +71,12 @@ class Flight extends Component {
         let chartData = pathArrayToObject(flight.path);
         return (
             <div className="flight">
-                
                 {children}
                 <div  style={{zIndex: this.state.open ? 99999999999999999 : 1}}  className={open ? 'plane-info open': 'plane-info'}>
                     <div className="info-top">
                         <h2 className="hlght">{flight.callsign ? flight.callsign :flight.icao24 }</h2>
                         <svg  className="api-svg" viewBox="0 0 100 100"><circle r="24" cy="26" cx="50" fill="#1A1A1A"></circle><circle className="progress-svg" r="18" cy="26" cx="50" fill="transparent" stroke="#00BCFF" strokeWidth="8"></circle></svg>
                     </div>
-      
                     <div>
                         <table>
                             <tbody>
@@ -103,7 +90,6 @@ class Flight extends Component {
                                 </tr>
                             </tbody>
                         </table>
-
                         <table>
                             <tbody>
                                 <tr>
@@ -124,14 +110,12 @@ class Flight extends Component {
                         <YAxis/>
                         {/* <CartesianGrid strokeDasharray="1 1" /> */}
                         <Tooltip 
-                        labelStyle={{
-                            background: '#262626'
-                        }}
-                        contentStyle={{
-                            background: '#262626'
-                        }}
-                        
-                        
+                            labelStyle={{
+                                background: '#262626'
+                            }}
+                            contentStyle={{
+                                background: '#262626'
+                            }}
                         />
                         {/* <Legend /> */}
                         <Line dot={false} type="monotone" dataKey="barAlt" stroke="#14736F" />
@@ -142,7 +126,5 @@ class Flight extends Component {
           );
     }
 }
-
-
 
 export default Flight
