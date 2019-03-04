@@ -1,0 +1,70 @@
+@import 'rr';
+@import 'colors';
+
+
+
+
+.flight{ 
+    padding: 1em;
+    // background: red;
+    min-width: 300px;
+    display: 'inline-flex';
+    z-index: 999999;
+}
+
+.hlght {
+    color: $highlight;
+}
+
+.plane-icon{
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    fill: $borderColor;
+    stroke: $chartAlternativeDarkColor;
+    stroke-width: 25px;
+    // stroke-dasharray: 1,1;
+    stroke-linejoin: round;
+}
+
+
+
+.plane-info{
+    z-index: 9999999;
+    flex-direction: column;
+    display: none;
+    // display: block;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    background: $bg;
+    border-radius: 5px;
+    border: 1px solid $borderColor;
+    color: $fg;
+    h2{
+        padding: 0 .5em;
+    }
+    .info-top{
+        height: 42px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    
+    table {
+        display: inline-block;
+        td{
+            padding: 0 .5em;
+        }
+    }
+}
+
+.open{
+    z-index: 9999999999999;
+    display: flex;
+}
+
+
+

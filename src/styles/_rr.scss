@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'RRPioneer';
+    font-style: normal;
+    font-weight: 400;
+    src: url('static/fonts/RRPioneer-Regular.eot'); /* IE9 Compat Modes */
+    src: local('RRPioneer'), local('RRPioneer'),
+         url('static/fonts/RRPioneer-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('static/fonts/RRPioneer-Regular.woff') format('woff'), /* Modern Browsers */
+         url('static/fonts/RRPioneer-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         
+  }
+  
+  
+  @import url('https://fonts.googleapis.com/css?family=Fira+Mono:500,700');
+  
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'RRPioneer';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #000000;
+    color:#686868!important;;
+  }
+
+
+  .api-svg{
+    width: 100px;
+    left: 23px;
+    position: relative;
+  }
+
+
+  .progress-svg {
+    padding: 0;
+    stroke-dasharray: 0.9 4.48;
+    animation: spinner 25s infinite linear;
+    stroke-dashoffset: 5;
+  }
+  
+
+  
+  @keyframes spinner {
+    100% {   
+      stroke-dashoffset: -22;
+    } 
+  }
