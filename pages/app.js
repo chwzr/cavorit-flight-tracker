@@ -70,18 +70,21 @@ class App extends Component {
       // api not sending a cors header? - no problem 😎
       flightAreaList[i].trackUrl = `https://xcors.felixkoppe.com/https://opensky-network.org/api/tracks/?icao24=${flight.icao24}`
     });
-    // set location of opened flight to center map (🚀 follow feature)
-    let i = flightAreaList.findIndex(flight => flight.icao24 === this.state.openFlight)
+    // set location of opened flight to center map (🚀-follow feature / no good xp though 😒 )
 
-    if(flightAreaList[i]){
-      // console.log("following plane")
-      // this.setState({
-      //   center: {
-      //     lat: flightAreaList[i].lat,
-      //     lng: flightAreaList[i].lng
-      //   }
-      // })
-    }
+        // let i = flightAreaList.findIndex(flight => flight.icao24 === this.state.openFlight)
+
+        // if(flightAreaList[i]){
+          // console.log("following 🚀")
+          // this.setState({
+          //   center: {
+          //     lat: flightAreaList[i].lat,
+          //     lng: flightAreaList[i].lng
+          //   }
+          // })
+        // }
+
+
     this.setState({
       flightList: flightAreaList
     });
@@ -159,7 +162,7 @@ class App extends Component {
               clickableIcons: false 
             }}
             hoverDistance={50}
-            onBoundsChange={this._onBoundsChange}
+            onBoundsChange={this._onBoundsChange.bind(this)}
             onChildClick={this._onChildClick.bind(this)}
           >
             {flights}

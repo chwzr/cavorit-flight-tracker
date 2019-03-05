@@ -62,6 +62,9 @@ class Flight extends Component {
             })
             .catch((error) => {
                 console.log(error.message)
+                this.setState({
+                    trackData: fake
+                })
             })
     }
 
