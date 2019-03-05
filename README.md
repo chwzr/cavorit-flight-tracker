@@ -7,7 +7,7 @@
 
 ## Performance
 measured with lighthouse
-![perf](https://i.imgur.com/eOv62Ct.png)
+![perf](https://i.imgur.com/Jfweocn.png)
 
 ## How To
 
