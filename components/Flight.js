@@ -49,10 +49,6 @@ class Flight extends Component {
             .then(res => {
                 if(res.icao24){
                     trackData = pathArrayToObject(res.path);
-                } else {
-                    //TODO: inject fake data here if there was no data yet else use the old data, and add a random point from fake dataset
-                    console.log("fake!")
-                    trackData = fake;
                 }
             })
             .then(()=>{
@@ -62,9 +58,18 @@ class Flight extends Component {
             })
             .catch((error) => {
                 console.log(error.message)
-                this.setState({
-                    trackData: fake
-                })
+                if(!this.state.trackData.length > 0){
+                    this.setState({
+                        trackData: fake
+                    })
+                } else {
+                    //just push a random fake point to trackdata
+                    let random = (Math.random() * (fake.length - 1 + 1) ) << 0;
+                    this.setState({
+                        trackData: [...this.state.trackData, fake[random]]
+                    })
+                    console.log("💩-API!")
+                }
             })
     }
 
