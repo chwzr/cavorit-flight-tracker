@@ -127,9 +127,13 @@ class App extends Component {
       this.setState({
         flightList: flightAreaList
       });
+      console.log("starting to poll for flights")
       this.updateFlightList()
     } catch(error){
       // console.log(error.message)
+      //retry if failed
+      console.log("retry init")
+      this.initFlightList();
     }
   }
 
@@ -142,6 +146,7 @@ class App extends Component {
         return
       }
       const flightAreaList = flightAreaListResponse.states.map(flight => flightArrayToObject(flight, flightAreaListResponse.time));
+      //TODO: rewrite with axios
       // flightAreaList.forEach(async (flight, i)=>{
       //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
       //   if(!flightAreaList[i].path){
@@ -150,7 +155,7 @@ class App extends Component {
       // });
 
       //remove flights which are not in bounds anymore
-      // UNCOMMENT this to keep memory footprint small... (disabling it will enable "persistence" of chartdata when moving the map)
+      // UNCOMMENT this to keep memory footprint small... (disabling it will disable  "persistence" of chartdata when moving the map)
       // this.setState(state => {
       //   let icaos = flightAreaList.map(f=>f.icao24);
       //   const flightList = state.flightList.filter((f) => !icaos.includes(f.icao24));
@@ -171,7 +176,7 @@ class App extends Component {
 
   async updateFlightList(){
 
-    //dear 💩api, eat my promise serial
+    //dear 💩-api, eat my promise serial
       const promiseSerial = funcs =>
         funcs.reduce((promise, func) =>
           promise.then(result => func().then(Array.prototype.concat.bind(result))),
@@ -222,9 +227,11 @@ class App extends Component {
           }) 
           
         })
-        .catch(console.error.bind(console))
+        .catch(()=>{
+          //return console.error.bind(console)
+        })
         .then(()=>{
-          // trigger self until this.isMounted is falsy. i know its a antipattern, but...
+          // trigger self again until this.isMounted is falsy. i know its a antipattern, but...
           if(this.isMounted){
             this.updateFlightList()
           }

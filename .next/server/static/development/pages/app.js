@@ -1952,20 +1952,25 @@ function (_Component) {
                 this.setState({
                   flightList: flightAreaList
                 });
+                console.log("starting to poll for flights");
                 this.updateFlightList();
-                _context3.next = 17;
+                _context3.next = 20;
                 break;
 
-              case 15:
-                _context3.prev = 15;
+              case 16:
+                _context3.prev = 16;
                 _context3.t0 = _context3["catch"](4);
+                // console.log(error.message)
+                //retry if failed
+                console.log("retry init");
+                this.initFlightList();
 
-              case 17:
+              case 20:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[4, 15]]);
+        }, _callee3, this, [[4, 16]]);
       }));
 
       function initFlightList() {
@@ -2011,14 +2016,15 @@ function (_Component) {
               case 9:
                 flightAreaList = flightAreaListResponse.states.map(function (flight) {
                   return flightArrayToObject(flight, flightAreaListResponse.time);
-                }); // flightAreaList.forEach(async (flight, i)=>{
+                }); //TODO: rewrite with axios
+                // flightAreaList.forEach(async (flight, i)=>{
                 //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
                 //   if(!flightAreaList[i].path){
                 //     flightAreaList[i].path = fake;
                 //   }
                 // });
                 //remove flights which are not in bounds anymore
-                // UNCOMMENT this to keep memory footprint small... (disabling it will enable "persistence" of chartdata when moving the map)
+                // UNCOMMENT this to keep memory footprint small... (disabling it will disable  "persistence" of chartdata when moving the map)
                 // this.setState(state => {
                 //   let icaos = flightAreaList.map(f=>f.icao24);
                 //   const flightList = state.flightList.filter((f) => !icaos.includes(f.icao24));
@@ -2072,7 +2078,7 @@ function (_Component) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                //dear 💩api, eat my promise serial
+                //dear 💩-api, eat my promise serial
                 promiseSerial = function promiseSerial(funcs) {
                   return funcs.reduce(function (promise, func) {
                     return promise.then(function (result) {
@@ -2157,8 +2163,9 @@ function (_Component) {
                     console.log("UPDATED STATE");
                     return flightList;
                   });
-                }).catch(console.error.bind(console)).then(function () {
-                  // trigger self until this.isMounted is falsy. i know its a antipattern, but...
+                }).catch(function () {//return console.error.bind(console)
+                }).then(function () {
+                  // trigger self again until this.isMounted is falsy. i know its a antipattern, but...
                   if (_this2.isMounted) {
                     _this2.updateFlightList();
                   }
