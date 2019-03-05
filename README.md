@@ -1,6 +1,6 @@
 # cavorit-flight-tracker
 
-(demo is online)[https://cavorit.koppe.design]
+- [demo is online](https://cavorit.koppe.design)
 - server side rendering with next.js
 - pure react implementation
 - made in 24 hours
