@@ -101,15 +101,15 @@ class App extends Component {
     clearInterval(this.flightPollInterval)
   }
 
-  // _onBoundsChange = (center, zoom, bounds) => {
-  //   let newBounds = {
-  //     northeast: {lat:bounds[6], lng:bounds[7]},
-  //     southwest: {lat:bounds[4], lng:bounds[5]}
-  //   }
-  //   this.setState({
-  //     bounds: newBounds
-  //   })
-  // }
+  _onBoundsChange = (center, zoom, bounds) => {
+    let newBounds = {
+      northeast: {lat:bounds[6], lng:bounds[7]},
+      southwest: {lat:bounds[4], lng:bounds[5]}
+    }
+    this.setState({
+      bounds: newBounds
+    })
+  }
 
   _onChildClick = (key, childProps) => {
     //sets current open info window
@@ -159,7 +159,7 @@ class App extends Component {
               clickableIcons: false 
             }}
             hoverDistance={50}
-            // onChange={this._onBoundsChange}
+            onBoundsChange={this._onBoundsChange}
             onChildClick={this._onChildClick.bind(this)}
           >
             {flights}
