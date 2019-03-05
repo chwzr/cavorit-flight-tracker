@@ -10,8 +10,8 @@ import fetch from 'isomorphic-unfetch';
  * @param {*} path
  * @returns {*} formatedPaths
  */
-
 function pathArrayToObject(path){
+    if(!path) return []
     let formatedPaths = [];
     path.forEach(p=>{
         formatedPaths .push({
