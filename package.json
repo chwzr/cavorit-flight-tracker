@@ -14,10 +14,12 @@
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
     "autoprefixer": "9.4.7",
+    "axios": "^0.18.0",
     "date-fns": "^2.0.0-alpha.27",
     "express": "^4.16.4",
     "google-map-react": "^1.1.2",
     "isomorphic-unfetch": "^3.0.0",
+    "lodash": "^4.17.11",
     "next": "^8.0.3",
     "postcss-easy-import": "^3.0.0",
     "prop-types": "^15.7.2",

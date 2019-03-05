@@ -55,3 +55,37 @@ urls.forEach(u=>{
 
                           {/* <svg height="200" width="100" class="api-svg" viewBox="0 0 100 50"><circle r="24" cy="26" cx="50" fill="#1A1A1A"></circle><circle class="progress-svg" r="18" cy="26" cx="50" fill="transparent" stroke="#00BCFF" stroke-width="8"></circle></svg> */}
       
+
+
+
+
+
+
+
+                                  //update trackdata
+          // try{
+          //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
+            
+          //   if(path){
+          //     flight.path = path;
+          //   } else {
+          //     let newPathVector = {
+          //       time: format(new Date(newFlightData.time*1000), 'HH:mm'),
+          //       barAlt: newFlightData.barAlt,
+          //       lat: newFlightData.lat,
+          //       lng: newFlightData.lng,
+          //     }
+          //     if(!flight.path) flight.path = fake;
+          //     flight.path.push(newPathVector)
+          //   }
+          // } catch(error) {
+          //   // if request fails, just push last information to path array
+          //   let newPathVector = {
+          //     time: format(new Date(newFlightData.time*1000), 'HH:mm'),
+          //     barAlt: newFlightData.barAlt,
+          //     lat: newFlightData.lat,
+          //     lng: newFlightData.lng,
+          //   }
+          //   if(!flight.path) flight.path = fake;
+          //   flight.path.push(newPathVector)
+          // }

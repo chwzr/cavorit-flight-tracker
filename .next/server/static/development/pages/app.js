@@ -102,233 +102,6 @@ module.exports =
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
-/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime-corejs2/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "./node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime-corejs2/helpers/esm/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/defineProperty */ "./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _fake__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../fake */ "./fake.js");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! recharts */ "recharts");
-/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(recharts__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! date-fns */ "date-fns");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_13__);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Takes a Path Array from API and returns a semantic and readable Array of Objects
- * @param {*} path
- * @returns {*} formatedPaths
- */
-
-function pathArrayToObject(path) {
-  var formatedPaths = [];
-  path.forEach(function (p) {
-    formatedPaths.push({
-      time: Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["format"])(new Date(p[0] * 1000), 'HH:mm'),
-      barAlt: p[3] ? p[3] : 0,
-      lat: p[1],
-      lng: p[2]
-    });
-  });
-  return formatedPaths;
-}
-
-var Flight =
-/*#__PURE__*/
-function (_Component) {
-  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__["default"])(Flight, _Component);
-
-  function Flight() {
-    var _getPrototypeOf2;
-
-    var _this;
-
-    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, Flight);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, (_getPrototypeOf2 = Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(Flight)).call.apply(_getPrototypeOf2, [this].concat(args)));
-
-    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__["default"])(_this), "state", {
-      trackData: []
-    });
-
-    return _this;
-  }
-
-  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(Flight, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.updateFlightTrack(); //TODO: 5 or 10 secs?
-
-      this.trackPollInterval = setInterval(this.updateFlightTrack.bind(this), 5000);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      console.log("clearing");
-      clearInterval(this.trackPollInterval);
-    }
-  }, {
-    key: "updateFlightTrack",
-    value: function () {
-      var _updateFlightTrack = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
-      /*#__PURE__*/
-      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this2 = this;
-
-        var trackData;
-        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                console.log();
-                return _context.abrupt("return", isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_13___default()(this.props.flight.trackUrl, {
-                  headers: {
-                    'origin': 'x-requested-with'
-                  }
-                }).then(function (res) {
-                  return res.json();
-                }).then(function (res) {
-                  if (res.icao24) {
-                    trackData = pathArrayToObject(res.path);
-                  } else {
-                    //TODO: inject fake data here if there was no data yet else use the old data, and add a random point from fake dataset
-                    console.log("fake!");
-                    trackData = _fake__WEBPACK_IMPORTED_MODULE_10__["default"];
-                  }
-                }).then(function () {
-                  _this2.setState({
-                    trackData: trackData
-                  });
-                }).catch(function (error) {
-                  console.log(error.message);
-                }));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function updateFlightTrack() {
-        return _updateFlightTrack.apply(this, arguments);
-      }
-
-      return updateFlightTrack;
-    }()
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          flight = _this$props.flight,
-          open = _this$props.open,
-          children = _this$props.children;
-      var chartData = pathArrayToObject(flight.path);
-      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
-        className: "flight"
-      }, children, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
-        style: {
-          zIndex: this.state.open ? 99999999999999999 : 1
-        },
-        className: open ? 'plane-info open' : 'plane-info'
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
-        className: "info-top"
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("h2", {
-        className: "hlght"
-      }, flight.callsign ? flight.callsign : flight.icao24), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("svg", {
-        className: "api-svg",
-        viewBox: "0 0 100 100"
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("circle", {
-        r: "24",
-        cy: "26",
-        cx: "50",
-        fill: "#1A1A1A"
-      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("circle", {
-        className: "progress-svg",
-        r: "18",
-        cy: "26",
-        cx: "50",
-        fill: "transparent",
-        stroke: "#00BCFF",
-        strokeWidth: "8"
-      }))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", {
-        className: "hlght"
-      }, "LAT"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", null, flight.lat)), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", {
-        className: "hlght"
-      }, "LNG"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", null, flight.lng)))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", {
-        className: "hlght"
-      }, "ALT"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", null, flight.geoAlt ? flight.geoAlt : 0)), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", {
-        className: "hlght"
-      }, "TRANS"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("td", null, flight.icao24))))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_11__["LineChart"], {
-        width: 300,
-        height: 150,
-        data: this.state.trackData,
-        margin: {
-          top: 10,
-          right: 10,
-          left: -15,
-          bottom: 10
-        }
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_11__["XAxis"], {
-        dataKey: "time"
-      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_11__["YAxis"], null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_11__["Tooltip"], {
-        labelStyle: {
-          background: '#262626'
-        },
-        contentStyle: {
-          background: '#262626'
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_11__["Line"], {
-        dot: false,
-        type: "monotone",
-        dataKey: "barAlt",
-        stroke: "#14736F"
-      }))));
-    }
-  }]);
-
-  return Flight;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (Flight);
-
-/***/ }),
-
-/***/ "./components/FlightInfo.js":
-/*!**********************************!*\
-  !*** ./components/FlightInfo.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
@@ -343,39 +116,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var FlightInfo =
+var Flight =
 /*#__PURE__*/
 function (_Component) {
-  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(FlightInfo, _Component);
+  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_4__["default"])(Flight, _Component);
 
-  function FlightInfo() {
-    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, FlightInfo);
+  function Flight() {
+    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Flight);
 
-    return Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__["default"])(this, Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__["default"])(FlightInfo).apply(this, arguments));
+    return Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__["default"])(this, Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__["default"])(Flight).apply(this, arguments));
   }
 
-  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(FlightInfo, [{
+  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Flight, [{
     key: "render",
     value: function render() {
-      var flight = this.props.flight;
+      var children = this.props.children;
       return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
-        lat: flight.lat,
-        lng: flight.lng
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("svg", {
-        version: "1",
-        className: "plane-icon",
-        xmlns: "http://www.w3.org/2000/svg",
-        viewBox: "0 0 400.156 400.155"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("path", {
-        d: "M396 50c6-19 5-33-3-43-10-8-24-9-42-3-19 6-35 16-49 31l-46 45L66 35c-3-1-6 0-9 2L21 74c-2 2-3 4-3 8 1 3 2 5 5 6l145 80-74 74-55-15h-2c-3 0-5 0-7 2L3 257c-2 2-3 4-3 7s2 5 4 7l72 53 54 72c1 3 4 4 6 4h1l7-2 27-28c3-3 3-5 2-9l-15-55 74-74 80 145c1 2 3 4 6 5h2l5-2 37-27c3-3 4-6 3-10l-45-198 45-46c15-15 25-31 31-49z"
-      })));
+        className: "flight"
+      }, children);
     }
   }]);
 
-  return FlightInfo;
+  return Flight;
 }(react__WEBPACK_IMPORTED_MODULE_5__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (FlightInfo);
+/* harmony default export */ __webpack_exports__["default"] = (Flight);
 
 /***/ }),
 
@@ -584,122 +349,141 @@ var PageWrapper = function PageWrapper(Comp) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var skyUrl = 'https://opensky-network.org/api'; //chwzr:uxPLNU5PakcEE8A
-
+var skyUrl = 'https://opensky-network.org/api';
+var proxySkyUrl = 'https://xcors.felixkoppe.com/https://opensky-network.org/api';
+var authSkyUrl = 'https://xcors.felixkoppe.com/https://chwzr:uxPLNU5PakcEE8A@opensky-network.org/api';
 var mapStyles = [{
-  elementType: 'geometry',
-  stylers: [{
-    color: '#242f3e'
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#212121"
   }]
 }, {
-  elementType: 'labels.text.stroke',
-  stylers: [{
-    color: '#242f3e'
+  "elementType": "labels.icon",
+  "stylers": [{
+    "visibility": "off"
   }]
 }, {
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#746855'
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#757575"
   }]
 }, {
-  featureType: 'administrative.locality',
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#d59563'
+  "elementType": "labels.text.stroke",
+  "stylers": [{
+    "color": "#212121"
   }]
 }, {
-  featureType: 'poi',
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#d59563'
+  "featureType": "administrative",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#757575"
   }]
 }, {
-  featureType: 'poi',
-  elementType: 'labels',
-  stylers: [{
-    visibility: "off"
+  "featureType": 'poi',
+  "elementType": 'labels',
+  "stylers": [{
+    "visibility": "off"
   }]
 }, {
-  featureType: 'poi.park',
-  elementType: 'geometry',
-  stylers: [{
-    color: '#263c3f'
+  "featureType": "administrative.country",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#9e9e9e"
   }]
 }, {
-  featureType: 'poi.park',
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#6b9a76'
+  "featureType": "administrative.land_parcel",
+  "stylers": [{
+    "visibility": "off"
   }]
 }, {
-  featureType: 'road',
-  elementType: 'geometry',
-  stylers: [{
-    color: '#38414e'
+  "featureType": "administrative.locality",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#bdbdbd"
   }]
 }, {
-  featureType: 'road',
-  elementType: 'geometry.stroke',
-  stylers: [{
-    color: '#212a37'
+  "featureType": "poi",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#757575"
   }]
 }, {
-  featureType: 'road',
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#9ca5b3'
+  "featureType": "poi.park",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#181818"
   }]
 }, {
-  featureType: 'road.highway',
-  elementType: 'geometry',
-  stylers: [{
-    color: '#746855'
+  "featureType": "poi.park",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#616161"
   }]
 }, {
-  featureType: 'road.highway',
-  elementType: 'geometry.stroke',
-  stylers: [{
-    color: '#1f2835'
+  "featureType": "poi.park",
+  "elementType": "labels.text.stroke",
+  "stylers": [{
+    "color": "#1b1b1b"
   }]
 }, {
-  featureType: 'road.highway',
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#f3d19c'
+  "featureType": "road",
+  "elementType": "geometry.fill",
+  "stylers": [{
+    "color": "#2c2c2c"
   }]
 }, {
-  featureType: 'transit',
-  elementType: 'geometry',
-  stylers: [{
-    color: '#2f3948'
+  "featureType": "road",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#8a8a8a"
   }]
 }, {
-  featureType: 'transit.station',
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#d59563'
+  "featureType": "road.arterial",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#373737"
   }]
 }, {
-  featureType: 'water',
-  elementType: 'geometry',
-  stylers: [{
-    color: '#17263c'
+  "featureType": "road.highway",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#3c3c3c"
   }]
 }, {
-  featureType: 'water',
-  elementType: 'labels.text.fill',
-  stylers: [{
-    color: '#515c6d'
+  "featureType": "road.highway.controlled_access",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#4e4e4e"
   }]
 }, {
-  featureType: 'water',
-  elementType: 'labels.text.stroke',
-  stylers: [{
-    color: '#17263c'
+  "featureType": "road.local",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#616161"
+  }]
+}, {
+  "featureType": "transit",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#757575"
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "geometry",
+  "stylers": [{
+    "color": "#000000"
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "labels.text.fill",
+  "stylers": [{
+    "color": "#3d3d3d"
   }]
 }];
 var Config = {
   apiUrl: skyUrl,
+  proxyApiUrl: proxySkyUrl,
+  authApiUrl: authSkyUrl,
   mapStyles: mapStyles
 };
 /* harmony default export */ __webpack_exports__["default"] = (Config);
@@ -715,6 +499,9 @@ var Config = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "date-fns");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_0__);
+
 var fake = [{
   "time": "20:52",
   "barAlt": 0,
@@ -1256,7 +1043,43 @@ var fake = [{
   "lat": 52.6728,
   "lng": 13.4924
 }];
+fake.forEach(function (p, i) {
+  p.time = Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["subMinutes"])(new Date(), i), 'HH:mm');
+});
 /* harmony default export */ __webpack_exports__["default"] = (fake);
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/array/from.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/array/from.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/array/from */ "core-js/library/fn/array/from");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/array/is-array */ "core-js/library/fn/array/is-array");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/is-iterable */ "core-js/library/fn/is-iterable");
 
 /***/ }),
 
@@ -1367,6 +1190,31 @@ module.exports = __webpack_require__(/*! core-js/library/fn/symbol */ "core-js/l
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(/*! core-js/library/fn/symbol/iterator */ "core-js/library/fn/symbol/iterator");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _arrayWithoutHoles; });
+/* harmony import */ var _core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core-js/array/is-array */ "./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js");
+/* harmony import */ var _core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0__);
+
+function _arrayWithoutHoles(arr) {
+  if (_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0___default()(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
 
 /***/ }),
 
@@ -1580,6 +1428,44 @@ function _inherits(subClass, superClass) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _iterableToArray; });
+/* harmony import */ var _core_js_array_from__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core-js/array/from */ "./node_modules/@babel/runtime-corejs2/core-js/array/from.js");
+/* harmony import */ var _core_js_array_from__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_core_js_array_from__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core-js/is-iterable */ "./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js");
+/* harmony import */ var _core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function _iterableToArray(iter) {
+  if (_core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1___default()(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return _core_js_array_from__WEBPACK_IMPORTED_MODULE_0___default()(iter);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _nonIterableSpread; });
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js":
 /*!*************************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js ***!
@@ -1671,6 +1557,28 @@ function _setPrototypeOf(o, p) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _toConsumableArray; });
+/* harmony import */ var _arrayWithoutHoles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithoutHoles */ "./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js");
+/* harmony import */ var _iterableToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js");
+/* harmony import */ var _nonIterableSpread__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./nonIterableSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js");
+
+
+
+function _toConsumableArray(arr) {
+  return Object(_arrayWithoutHoles__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || Object(_iterableToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(arr) || Object(_nonIterableSpread__WEBPACK_IMPORTED_MODULE_2__["default"])();
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/typeof.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/typeof.js ***!
@@ -1727,29 +1635,40 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "regenerator-run
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
-/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime-corejs2/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "./node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime-corejs2/helpers/esm/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/defineProperty */ "./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _components_Layout__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/Layout */ "./components/Layout.js");
-/* harmony import */ var _components_PageWrapper__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/PageWrapper */ "./components/PageWrapper.js");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../config */ "./config.js");
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
-/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var google_map_react__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! google-map-react */ "google-map-react");
-/* harmony import */ var google_map_react__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(google_map_react__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _components_FlightInfo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../components/FlightInfo */ "./components/FlightInfo.js");
-/* harmony import */ var _components_Flight__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../components/Flight */ "./components/Flight.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/promise */ "./node_modules/@babel/runtime-corejs2/core-js/promise.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/toConsumableArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime-corejs2/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime-corejs2/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/possibleConstructorReturn */ "./node_modules/@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/getPrototypeOf */ "./node_modules/@babel/runtime-corejs2/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime-corejs2/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/defineProperty */ "./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _components_Layout__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/Layout */ "./components/Layout.js");
+/* harmony import */ var _components_PageWrapper__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../components/PageWrapper */ "./components/PageWrapper.js");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../config */ "./config.js");
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! isomorphic-unfetch */ "isomorphic-unfetch");
+/* harmony import */ var isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var google_map_react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! google-map-react */ "google-map-react");
+/* harmony import */ var google_map_react__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(google_map_react__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _components_Flight__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../components/Flight */ "./components/Flight.js");
+/* harmony import */ var _fake__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../fake */ "./fake.js");
+/* harmony import */ var any_promise__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! any-promise */ "any-promise");
+/* harmony import */ var any_promise__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(any_promise__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! recharts */ "recharts");
+/* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(recharts__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! date-fns */ "date-fns");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_23__);
 
 
 
@@ -1763,6 +1682,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+ // import {format} from 'date-fns';
 
 
 
@@ -1776,7 +1702,8 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function flightArrayToObject(arr, time) {
-  // let altitudeHistory = getAltitudeHistoryObject(arr, time);
+  if (!arr) return false;
+  if (!time) return false;
   var flight = {
     icao24: arr[0],
     callsign: arr[1],
@@ -1784,40 +1711,66 @@ function flightArrayToObject(arr, time) {
     lng: arr[5],
     barAlt: arr[7],
     geoAlt: arr[13],
-    // altitudeHistory: [altitudeHistory],
     time: time
   };
   return flight;
 }
+/**
+ * Takes a Path Array from API and returns a semantic and readable Array of Objects
+ * @param {*} path
+ * @returns {*} formatedPaths
+ */
 
-var flightPollInterval;
+
+function pathArrayToObject(path) {
+  if (!path) return [];
+  var formatedPaths = [];
+  path.forEach(function (p) {
+    formatedPaths.push({
+      time: Object(date_fns__WEBPACK_IMPORTED_MODULE_23__["format"])(new Date(p[0] * 1000), 'HH:mm'),
+      barAlt: p[3] ? p[3] : 0,
+      lat: p[1],
+      lng: p[2]
+    });
+  });
+  return formatedPaths;
+} // 💩-api not sending a cors header? - no problem 😎
+
+
+var API = axios__WEBPACK_IMPORTED_MODULE_21___default.a.create({
+  baseURL: _config__WEBPACK_IMPORTED_MODULE_15__["default"].proxyApiUrl,
+  timeout: 1000,
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest'
+  }
+});
 
 var App =
 /*#__PURE__*/
 function (_Component) {
-  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_7__["default"])(App, _Component);
+  Object(_babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_9__["default"])(App, _Component);
 
   function App() {
     var _getPrototypeOf2;
 
     var _this;
 
-    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_2__["default"])(this, App);
+    Object(_babel_runtime_corejs2_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, App);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__["default"])(this, (_getPrototypeOf2 = Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = Object(_babel_runtime_corejs2_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_6__["default"])(this, (_getPrototypeOf2 = Object(_babel_runtime_corejs2_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_7__["default"])(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__["default"])(_this), "state", {
+    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_10__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_8__["default"])(_this), "state", {
       flightList: [],
       openFlight: false,
       center: {
         lat: 52.52000659999999,
         lng: 13.404954
       },
-      zoom: 11,
+      zoom: 10,
       bounds: {
         northeast: {
           lat: 52.6754542,
@@ -1830,7 +1783,9 @@ function (_Component) {
       }
     });
 
-    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__["default"])(_this), "_onBoundsChange", function (center, zoom, bounds, marginBounds) {
+    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_10__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_8__["default"])(_this), "isMounted", true);
+
+    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_10__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_8__["default"])(_this), "_onBoundsChange", function (center, zoom, bounds) {
       var newBounds = {
         northeast: {
           lat: bounds[6],
@@ -1845,9 +1800,11 @@ function (_Component) {
       _this.setState({
         bounds: newBounds
       });
+
+      _this.updateAreaList(newBounds);
     });
 
-    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_8__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__["default"])(_this), "_onChildClick", function (key, childProps) {
+    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_10__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_8__["default"])(_this), "_onChildClick", function (key, childProps) {
       //sets current open info window
       _this.setState({
         center: {
@@ -1861,31 +1818,32 @@ function (_Component) {
     return _this;
   }
 
-  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(App, [{
-    key: "getPositionData",
+  Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(App, [{
+    key: "componentDidMount",
     value: function () {
-      var _getPositionData = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
+      var _componentDidMount = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
       /*#__PURE__*/
-      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var locationRequest, locationResponse, locationData;
-        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee() {
+        var locationData;
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14___default()("https://maps.googleapis.com/maps/api/geocode/json?&key=AIzaSyDUGpUnqLVJtzfGuH_ZqbN9eLLgA5wMEis&address=".concat(this.props.locationSlug));
+                this.initFlightList();
+                _context.next = 3;
+                return this.getPositionData(this.props.locationSlug ? this.props.locationSlug : "Berlin");
 
-              case 2:
-                locationRequest = _context.sent;
-                _context.next = 5;
-                return locationRequest.json();
+              case 3:
+                locationData = _context.sent;
+
+                if (locationData.geometry) {
+                  this.setState({
+                    center: locationData.geometry.location,
+                    bounds: locationData.geometry.bounds
+                  });
+                }
 
               case 5:
-                locationResponse = _context.sent;
-                locationData = locationResponse.results[0];
-                return _context.abrupt("return", locationData);
-
-              case 8:
               case "end":
                 return _context.stop();
             }
@@ -1893,78 +1851,325 @@ function (_Component) {
         }, _callee, this);
       }));
 
-      function getPositionData() {
+      function componentDidMount() {
+        return _componentDidMount.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.isMounted = false;
+    }
+  }, {
+    key: "getPositionData",
+    value: function () {
+      var _getPositionData = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
+      /*#__PURE__*/
+      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee2(locationSlug) {
+        var locationRequest, locationResponse, locationData;
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.log(locationSlug); // get the userlocation based of the url slug .../<location> (defaults to berlin for demo reasons) 
+                //TODO: rewrite with axios
+
+                _context2.next = 3;
+                return isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16___default()("https://maps.googleapis.com/maps/api/geocode/json?&key=AIzaSyDUGpUnqLVJtzfGuH_ZqbN9eLLgA5wMEis&address=".concat(locationSlug));
+
+              case 3:
+                locationRequest = _context2.sent;
+                _context2.next = 6;
+                return locationRequest.json();
+
+              case 6:
+                locationResponse = _context2.sent;
+                locationData = locationResponse.results[0];
+                return _context2.abrupt("return", locationData);
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function getPositionData(_x) {
         return _getPositionData.apply(this, arguments);
       }
 
       return getPositionData;
     }()
   }, {
-    key: "updateFlightList",
+    key: "initFlightList",
     value: function () {
-      var _updateFlightList = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
+      var _initFlightList = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
       /*#__PURE__*/
-      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this2 = this;
-
-        var bounds, flightAreaListRequest, flightAreaListResponse, flightAreaList, i;
-        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee3() {
+        var bounds, flightAreaListRequest, flightAreaListResponse, flightAreaList;
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 // get all 🚀 based on the location bounds
-                bounds = this.state.bounds;
-                _context2.next = 3;
-                return isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_14___default()("".concat(_config__WEBPACK_IMPORTED_MODULE_13__["default"].apiUrl, "/states/all?lamin=").concat(bounds.southwest.lat, "&lomin=").concat(bounds.southwest.lng, "&lamax=").concat(bounds.northeast.lat, "&lomax=").concat(bounds.northeast.lng));
+                bounds = this.state.bounds; //TODO: rewrite with axios
+
+                _context3.next = 3;
+                return isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16___default()("".concat(_config__WEBPACK_IMPORTED_MODULE_15__["default"].proxyApiUrl, "/states/all?lamin=").concat(bounds.southwest.lat, "&lomin=").concat(bounds.southwest.lng, "&lamax=").concat(bounds.northeast.lat, "&lomax=").concat(bounds.northeast.lng), {
+                  headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                  }
+                });
 
               case 3:
-                flightAreaListRequest = _context2.sent;
-                _context2.next = 6;
+                flightAreaListRequest = _context3.sent;
+                _context3.prev = 4;
+                _context3.next = 7;
                 return flightAreaListRequest.json();
 
-              case 6:
-                flightAreaListResponse = _context2.sent;
+              case 7:
+                flightAreaListResponse = _context3.sent;
 
                 if (flightAreaListResponse.states) {
-                  _context2.next = 9;
+                  _context3.next = 10;
                   break;
                 }
 
-                return _context2.abrupt("return");
+                return _context3.abrupt("return");
 
-              case 9:
+              case 10:
                 flightAreaList = flightAreaListResponse.states.map(function (flight) {
                   return flightArrayToObject(flight, flightAreaListResponse.time);
-                }); // create the apiUrl to poll for 🚀-Track data
-
-                flightAreaList.forEach(function (flight, i) {
-                  // api not sending a cors header? - no problem 😎
-                  flightAreaList[i].trackUrl = "https://xcors.felixkoppe.com/https://opensky-network.org/api/tracks/?icao24=".concat(flight.icao24);
-                }); // set location of opened flight to center map (🚀 follow feature)
-
-                i = flightAreaList.findIndex(function (flight) {
-                  return flight.icao24 === _this2.state.openFlight;
-                });
-
-                if (flightAreaList[i]) {// console.log("following plane")
-                  // this.setState({
-                  //   center: {
-                  //     lat: flightAreaList[i].lat,
-                  //     lng: flightAreaList[i].lng
-                  //   }
-                  // })
-                }
+                }); // create the apiUrl to poll for 🚀-Track data - TODO: rewrite with axios
+                // flightAreaList.forEach(async (flight, i)=>{
+                //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
+                //   flightAreaList[i].path =  path[0] ? path : fake;
+                // });
 
                 this.setState({
                   flightList: flightAreaList
                 });
+                this.updateFlightList();
+                _context3.next = 17;
+                break;
 
-              case 14:
+              case 15:
+                _context3.prev = 15;
+                _context3.t0 = _context3["catch"](4);
+
+              case 17:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this, [[4, 15]]);
+      }));
+
+      function initFlightList() {
+        return _initFlightList.apply(this, arguments);
+      }
+
+      return initFlightList;
+    }()
+  }, {
+    key: "updateAreaList",
+    value: function () {
+      var _updateAreaList = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
+      /*#__PURE__*/
+      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee4(bounds) {
+        var flightAreaListRequest, flightAreaListResponse, flightAreaList;
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16___default()("".concat(_config__WEBPACK_IMPORTED_MODULE_15__["default"].proxyApiUrl, "/states/all?lamin=").concat(bounds.southwest.lat, "&lomin=").concat(bounds.southwest.lng, "&lamax=").concat(bounds.northeast.lat, "&lomax=").concat(bounds.northeast.lng), {
+                  headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                  }
+                });
+
+              case 2:
+                flightAreaListRequest = _context4.sent;
+                _context4.prev = 3;
+                _context4.next = 6;
+                return flightAreaListRequest.json();
+
+              case 6:
+                flightAreaListResponse = _context4.sent;
+
+                if (flightAreaListResponse.states) {
+                  _context4.next = 9;
+                  break;
+                }
+
+                return _context4.abrupt("return");
+
+              case 9:
+                flightAreaList = flightAreaListResponse.states.map(function (flight) {
+                  return flightArrayToObject(flight, flightAreaListResponse.time);
+                }); // flightAreaList.forEach(async (flight, i)=>{
+                //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
+                //   if(!flightAreaList[i].path){
+                //     flightAreaList[i].path = fake;
+                //   }
+                // });
+                //remove flights which are not in bounds anymore
+                // UNCOMMENT this to keep memory footprint small... (disabling it will enable "persistence" of chartdata when moving the map)
+                // this.setState(state => {
+                //   let icaos = flightAreaList.map(f=>f.icao24);
+                //   const flightList = state.flightList.filter((f) => !icaos.includes(f.icao24));
+                //   return {flightList,};
+                // });
+                //add flights which are new
+
+                this.setState(function (state) {
+                  var oldIcaos = state.flightList.map(function (f) {
+                    return f.icao24;
+                  });
+                  var newFlights = flightAreaList.filter(function (f) {
+                    return !oldIcaos.includes(f.icao24);
+                  });
+                  var flightList = [].concat(Object(_babel_runtime_corejs2_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(state.flightList), Object(_babel_runtime_corejs2_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(newFlights));
+                  return {
+                    flightList: flightList
+                  };
+                });
+                _context4.next = 15;
+                break;
+
+              case 13:
+                _context4.prev = 13;
+                _context4.t0 = _context4["catch"](3);
+
+              case 15:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[3, 13]]);
+      }));
+
+      function updateAreaList(_x2) {
+        return _updateAreaList.apply(this, arguments);
+      }
+
+      return updateAreaList;
+    }()
+  }, {
+    key: "updateFlightList",
+    value: function () {
+      var _updateFlightList = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
+      /*#__PURE__*/
+      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee6() {
+        var _this2 = this;
+
+        var promiseSerial, urls, funcs;
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                //dear 💩api, eat my promise serial
+                promiseSerial = function promiseSerial(funcs) {
+                  return funcs.reduce(function (promise, func) {
+                    return promise.then(function (result) {
+                      return func().then(Array.prototype.concat.bind(result));
+                    });
+                  }, _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0___default.a.resolve([]));
+                }; // the url's to resolve
+
+
+                urls = this.state.flightList.map(function (flight) {
+                  return "/states/all?&icao24=".concat(flight.icao24);
+                }); // convert each url to a function that returns a promise
+
+                funcs = urls.map(function (url) {
+                  return function () {
+                    return API.get(url);
+                  };
+                }); // execute Promises in serial
+
+                promiseSerial(funcs).then(function (res) {
+                  console.log("Updating Flight States");
+                  return res.map(function (r) {
+                    return r.data;
+                  });
+                }).then(function (newFlightList) {
+                  var newFlightObjects = newFlightList.map(function (flight) {
+                    if (flight.states) {
+                      return flightArrayToObject(flight.states[0], flight.time);
+                    } else {
+                      return null;
+                    }
+                  });
+                  var newFlightObjectsCleaned = newFlightObjects.filter(function (obj) {
+                    return obj;
+                  });
+
+                  _this2.setState(function (state) {
+                    var flightList = state.flightList.map(
+                    /*#__PURE__*/
+                    function () {
+                      var _ref = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
+                      /*#__PURE__*/
+                      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee5(flight) {
+                        var newFlightData, newPathVector;
+                        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee5$(_context5) {
+                          while (1) {
+                            switch (_context5.prev = _context5.next) {
+                              case 0:
+                                if (!flight.path) flight.path = [];
+                                newFlightData = newFlightObjectsCleaned.find(function (f) {
+                                  return f.icao24 == flight.icao24;
+                                });
+
+                                if (newFlightData) {
+                                  flight.lat = newFlightData.lat;
+                                  flight.lng = newFlightData.lng;
+                                  flight.callsign = newFlightData.callsign;
+                                  flight.barAlt = newFlightData.barAlt;
+                                  newPathVector = {
+                                    time: Object(date_fns__WEBPACK_IMPORTED_MODULE_23__["format"])(new Date(), 'HH:mm:ss'),
+                                    barAlt: newFlightData.barAlt ? newFlightData.barAlt : 0,
+                                    lat: newFlightData.lat,
+                                    lng: newFlightData.lng
+                                  };
+                                  flight.path.push(newPathVector);
+                                }
+
+                                return _context5.abrupt("return", flight);
+
+                              case 4:
+                              case "end":
+                                return _context5.stop();
+                            }
+                          }
+                        }, _callee5);
+                      }));
+
+                      return function (_x3) {
+                        return _ref.apply(this, arguments);
+                      };
+                    }());
+                    console.log("UPDATED STATE");
+                    return flightList;
+                  });
+                }).catch(console.error.bind(console)).then(function () {
+                  // trigger self until this.isMounted is falsy. i know its a antipattern, but...
+                  if (_this2.isMounted) {
+                    _this2.updateFlightList();
+                  }
+                });
+
+              case 4:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
       }));
 
       function updateFlightList() {
@@ -1974,54 +2179,159 @@ function (_Component) {
       return updateFlightList;
     }()
   }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.flightPollInterval = setInterval(this.updateFlightList.bind(this), 1000);
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      clearInterval(this.flightPollInterval);
-    }
+    key: "updateFlightTrack",
+    value: function () {
+      var _updateFlightTrack = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
+      /*#__PURE__*/
+      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee7(url) {
+        var trackData;
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16___default()(url, {
+                  headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                  }
+                }).then(function (res) {
+                  return res.json();
+                }).then(function (res) {
+                  if (res.icao24) {
+                    trackData = pathArrayToObject(res.path);
+                  }
+                }).then(function () {
+                  return trackData;
+                }).catch(function (error) {
+                  console.log('💩API:', error.message);
+                  return false;
+                });
+
+              case 2:
+                return _context7.abrupt("return", _context7.sent);
+
+              case 3:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }));
+
+      function updateFlightTrack(_x4) {
+        return _updateFlightTrack.apply(this, arguments);
+      }
+
+      return updateFlightTrack;
+    }()
   }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
       // map flights to Map Marker DOM
-      var flights = this.state.flightList.map(function (flight) {
-        if (flight) {
-          return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_components_Flight__WEBPACK_IMPORTED_MODULE_17__["default"], {
-            style: {
-              height: 100,
-              width: 100
-            },
-            open: _this3.state.openFlight == flight.icao24,
-            key: flight.icao24,
-            lat: flight.lat,
-            lng: flight.lng,
-            flight: flight
-          }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("svg", {
-            style: {
-              zIndex: 1
-            },
-            version: "1",
-            width: "48",
-            height: "48",
-            className: "plane-icon",
-            xmlns: "http://www.w3.org/2000/svg",
-            viewBox: "0 0 400.156 400.155"
-          }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("path", {
-            d: "M396 50c6-19 5-33-3-43-10-8-24-9-42-3-19 6-35 16-49 31l-46 45L66 35c-3-1-6 0-9 2L21 74c-2 2-3 4-3 8 1 3 2 5 5 6l145 80-74 74-55-15h-2c-3 0-5 0-7 2L3 257c-2 2-3 4-3 7s2 5 4 7l72 53 54 72c1 3 4 4 6 4h1l7-2 27-28c3-3 3-5 2-9l-15-55 74-74 80 145c1 2 3 4 6 5h2l5-2 37-27c3-3 4-6 3-10l-45-198 45-46c15-15 25-31 31-49z"
-          })));
-        }
+      //ensure the open flightpanel is the last in the array
+      var flightList;
+
+      if (this.state.openFlight) {
+        flightList = this.state.flightList;
+        var i = flightList.findIndex(function (f) {
+          return f.icao24 == _this3.state.openFlight;
+        });
+        flightList.push(flightList[i]);
+        flightList.splice(i, 1);
+      } else {
+        flightList = this.state.flightList;
+      }
+
+      var flights = flightList.map(function (flight) {
+        return react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_components_Flight__WEBPACK_IMPORTED_MODULE_18__["default"], {
+          style: {
+            height: 100,
+            width: 100,
+            zIndex: _this3.state.openFlight == flight.icao24 ? 9999999 : 100
+          },
+          open: _this3.state.openFlight == flight.icao24,
+          key: flight.icao24,
+          lat: flight.lat,
+          lng: flight.lng,
+          flight: flight
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("svg", {
+          style: {
+            zIndex: 1
+          },
+          version: "1",
+          width: "48",
+          height: "48",
+          className: "plane-icon",
+          xmlns: "http://www.w3.org/2000/svg",
+          viewBox: "0 0 400.156 400.155"
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("path", {
+          d: "M396 50c6-19 5-33-3-43-10-8-24-9-42-3-19 6-35 16-49 31l-46 45L66 35c-3-1-6 0-9 2L21 74c-2 2-3 4-3 8 1 3 2 5 5 6l145 80-74 74-55-15h-2c-3 0-5 0-7 2L3 257c-2 2-3 4-3 7s2 5 4 7l72 53 54 72c1 3 4 4 6 4h1l7-2 27-28c3-3 3-5 2-9l-15-55 74-74 80 145c1 2 3 4 6 5h2l5-2 37-27c3-3 4-6 3-10l-45-198 45-46c15-15 25-31 31-49z"
+        })), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", {
+          className: _this3.state.openFlight == flight.icao24 ? 'plane-info open' : 'plane-info'
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", {
+          className: "info-top"
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("h2", {
+          className: "hlght"
+        }, flight.callsign ? flight.callsign : flight.icao24), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("svg", {
+          className: "api-svg",
+          viewBox: "0 0 100 100"
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("circle", {
+          r: "24",
+          cy: "26",
+          cx: "50",
+          fill: "#1A1A1A"
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("circle", {
+          className: "progress-svg",
+          r: "18",
+          cy: "26",
+          cx: "50",
+          fill: "transparent",
+          stroke: "#00BCFF",
+          strokeWidth: "8"
+        }))), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", {
+          className: "hlght"
+        }, "LAT"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", null, flight.lat)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", {
+          className: "hlght"
+        }, "LNG"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", null, flight.lng)))), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", {
+          className: "hlght"
+        }, "ALT"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", null, flight.geoAlt ? flight.geoAlt : 0)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", {
+          className: "hlght"
+        }, "TRANS"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", null, flight.icao24))))), Math.random() && flight.path && react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["LineChart"], {
+          key: Math.random(),
+          width: 300,
+          height: 150,
+          data: flight.path,
+          margin: {
+            top: 10,
+            right: 10,
+            left: -24,
+            bottom: 10
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["XAxis"], {
+          dataKey: "time"
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["YAxis"], null), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["Tooltip"], {
+          labelStyle: {
+            background: '#262626'
+          },
+          contentStyle: {
+            background: '#262626',
+            borderColor: '#7697AA'
+          }
+        }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["Line"], {
+          dot: false,
+          type: "monotone",
+          dataKey: "barAlt",
+          stroke: "#14736F"
+        }))));
       });
-      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_11__["default"], null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_13__["default"], null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("div", {
         style: {
           height: '100vh',
           width: '100%'
         }
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(google_map_react__WEBPACK_IMPORTED_MODULE_15___default.a, {
+      }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(google_map_react__WEBPACK_IMPORTED_MODULE_17___default.a, {
         bootstrapURLKeys: {
           key: 'AIzaSyDUGpUnqLVJtzfGuH_ZqbN9eLLgA5wMEis'
         },
@@ -2031,40 +2341,44 @@ function (_Component) {
         },
         defaultZoom: this.state.zoom,
         options: {
-          styles: _config__WEBPACK_IMPORTED_MODULE_13__["default"].mapStyles,
+          styles: _config__WEBPACK_IMPORTED_MODULE_15__["default"].mapStyles,
           disableDefaultUI: true,
           clickableIcons: false
         },
         hoverDistance: 50,
-        onBoundsChange: this._onBoundsChange,
-        onChildClick: this._onChildClick.bind(this)
+        onBoundsChange: this._onBoundsChange.bind(this),
+        onChildClick: this._onChildClick.bind(this),
+        overlayViewDivStyle: {
+          zIndex: 100
+        }
       }, flights)));
     }
   }], [{
     key: "getInitialProps",
     value: function () {
-      var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])(
+      var _getInitialProps = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
       /*#__PURE__*/
-      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context) {
+      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee8(context) {
         var locationSlug;
-        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
                 locationSlug = context.query.slug;
-                return _context3.abrupt("return", {
+                console.log("setinitprops");
+                return _context8.abrupt("return", {
                   locationSlug: locationSlug
                 });
 
-              case 2:
+              case 3:
               case "end":
-                return _context3.stop();
+                return _context8.stop();
             }
           }
-        }, _callee3);
+        }, _callee8);
       }));
 
-      function getInitialProps(_x) {
+      function getInitialProps(_x5) {
         return _getInitialProps.apply(this, arguments);
       }
 
@@ -2073,9 +2387,9 @@ function (_Component) {
   }]);
 
   return App;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_11__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(_components_PageWrapper__WEBPACK_IMPORTED_MODULE_12__["default"])(App));
+/* harmony default export */ __webpack_exports__["default"] = (Object(_components_PageWrapper__WEBPACK_IMPORTED_MODULE_14__["default"])(App));
 
 /***/ }),
 
@@ -2099,6 +2413,61 @@ module.exports = "@import url(\"https://fonts.googleapis.com/css?family=Fira+Mon
 
 module.exports = __webpack_require__(/*! /Users/felix/Dropbox/KoppeDesign/Projekte/cavorit-coding-challenge/pages/app.js */"./pages/app.js");
 
+
+/***/ }),
+
+/***/ "any-promise":
+/*!******************************!*\
+  !*** external "any-promise" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("any-promise");
+
+/***/ }),
+
+/***/ "axios":
+/*!************************!*\
+  !*** external "axios" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("axios");
+
+/***/ }),
+
+/***/ "core-js/library/fn/array/from":
+/*!************************************************!*\
+  !*** external "core-js/library/fn/array/from" ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/array/from");
+
+/***/ }),
+
+/***/ "core-js/library/fn/array/is-array":
+/*!****************************************************!*\
+  !*** external "core-js/library/fn/array/is-array" ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/array/is-array");
+
+/***/ }),
+
+/***/ "core-js/library/fn/is-iterable":
+/*!*************************************************!*\
+  !*** external "core-js/library/fn/is-iterable" ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/is-iterable");
 
 /***/ }),
 
