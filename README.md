@@ -1,5 +1,6 @@
 # cavorit-flight-tracker
 
+(demo is online)[https://cavorit.koppe.design]
 - server side rendering with next.js
 - pure react implementation
 - made in 24 hours
@@ -8,7 +9,7 @@
 measured with lighthouse
 ![perf](https://i.imgur.com/eOv62Ct.png)
 
-## how to
+## How To
 
 running `yarn dev` will fire up a dev server, but first `yarn install`.
 
