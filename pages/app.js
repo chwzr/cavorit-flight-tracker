@@ -84,7 +84,6 @@ class App extends Component {
 
   static async getInitialProps(context) {
     const locationSlug = context.query.slug;
-    console.log("setinitprops")
     return {  locationSlug};
   }
 
@@ -101,7 +100,7 @@ class App extends Component {
   }
   
   componentWillUnmount(){
-    this.isMounted = false;
+    clearInterval(this.updatePoll)
   }
 
   async getPositionData(locationSlug){
@@ -128,12 +127,7 @@ class App extends Component {
       this.setState({
         flightList: flightAreaList
       });
-      console.log("starting to poll for flights")
-      
     } catch(error){
-      // console.log(error.message)
-      //retry if failed
-      console.log("retry init")
       this.initFlightList();
     }
   }

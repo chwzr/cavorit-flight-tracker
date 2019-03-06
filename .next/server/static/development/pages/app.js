@@ -1868,7 +1868,7 @@ function (_Component) {
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      this.isMounted = false;
+      clearInterval(this.updatePoll);
     }
   }, {
     key: "getPositionData",
@@ -1955,24 +1955,20 @@ function (_Component) {
                 this.setState({
                   flightList: flightAreaList
                 });
-                console.log("starting to poll for flights");
-                _context3.next = 19;
+                _context3.next = 17;
                 break;
 
-              case 15:
-                _context3.prev = 15;
+              case 14:
+                _context3.prev = 14;
                 _context3.t0 = _context3["catch"](4);
-                // console.log(error.message)
-                //retry if failed
-                console.log("retry init");
                 this.initFlightList();
 
-              case 19:
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[4, 15]]);
+        }, _callee3, this, [[4, 14]]);
       }));
 
       function initFlightList() {
@@ -2334,12 +2330,11 @@ function (_Component) {
             switch (_context8.prev = _context8.next) {
               case 0:
                 locationSlug = context.query.slug;
-                console.log("setinitprops");
                 return _context8.abrupt("return", {
                   locationSlug: locationSlug
                 });
 
-              case 3:
+              case 2:
               case "end":
                 return _context8.stop();
             }
