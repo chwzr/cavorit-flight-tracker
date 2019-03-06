@@ -1,6 +1,6 @@
 let skyUrl = 'https://opensky-network.org/api';
 let proxySkyUrl = 'https://xcors.felixkoppe.com/https://opensky-network.org/api';
-let authSkyUrl = 'https://xcors.felixkoppe.com/https://chwzr:uxPLNU5PakcEE8A@opensky-network.org/api';
+let updateApi = 'https://cors.koppe.design/';
 
 let mapStyles = [
   {
@@ -197,7 +197,7 @@ let mapStyles = [
 const Config = {
   apiUrl: skyUrl,
   proxyApiUrl: proxySkyUrl,
-  authApiUrl: authSkyUrl,
+  authApiUrl: updateApi,
   mapStyles
 };
 

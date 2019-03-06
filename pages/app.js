@@ -61,6 +61,11 @@ const API = axios.create({
   headers: { 'X-Requested-With': 'XMLHttpRequest'}
 });
 
+const updateApi = axios.create({
+  baseURL: Config.authApiUrl,
+  timeout: 1000,
+});
+
 
 class App extends Component {
 
@@ -84,7 +89,8 @@ class App extends Component {
   }
 
   async componentDidMount(){
-    this.initFlightList();
+    await this.initFlightList();
+    this.updatePoll = setInterval(this.updateFlightList.bind(this), 3000)
     let locationData = await this.getPositionData(this.props.locationSlug ? this.props.locationSlug : "Berlin")
     if(locationData.geometry){
       this.setState({
@@ -119,16 +125,11 @@ class App extends Component {
         return
       }
       const flightAreaList = flightAreaListResponse.states.map(flight => flightArrayToObject(flight, flightAreaListResponse.time));
-      // create the apiUrl to poll for 🚀-Track data - TODO: rewrite with axios
-      // flightAreaList.forEach(async (flight, i)=>{
-      //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
-      //   flightAreaList[i].path =  path[0] ? path : fake;
-      // });
       this.setState({
         flightList: flightAreaList
       });
       console.log("starting to poll for flights")
-      this.updateFlightList()
+      
     } catch(error){
       // console.log(error.message)
       //retry if failed
@@ -146,16 +147,9 @@ class App extends Component {
         return
       }
       const flightAreaList = flightAreaListResponse.states.map(flight => flightArrayToObject(flight, flightAreaListResponse.time));
-      //TODO: rewrite with axios
-      // flightAreaList.forEach(async (flight, i)=>{
-      //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
-      //   if(!flightAreaList[i].path){
-      //     flightAreaList[i].path = fake;
-      //   }
-      // });
 
       //remove flights which are not in bounds anymore
-      // UNCOMMENT this to keep memory footprint small... (disabling it will disable  "persistence" of chartdata when moving the map)
+      // UNCOMMENT this to keep memory footprint small... (it will disable  "persistence" of chartdata when moving items from the map)
       // this.setState(state => {
       //   let icaos = flightAreaList.map(f=>f.icao24);
       //   const flightList = state.flightList.filter((f) => !icaos.includes(f.icao24));
@@ -175,67 +169,34 @@ class App extends Component {
   }
 
   async updateFlightList(){
+    this.setState(async state=>{
 
-    //dear 💩-api, eat my promise serial
-      const promiseSerial = funcs =>
-        funcs.reduce((promise, func) =>
-          promise.then(result => func().then(Array.prototype.concat.bind(result))),
-          Promise.resolve([]))
+      const b = this.state.bounds;
+      const update = await updateApi.get(`${b.northeast.lat}/${b.northeast.lng}/${b.southwest.lat}/${b.southwest.lng}`,)
+      const newFlights = update.data;
 
-      // the url's to resolve
-      const urls = this.state.flightList.map(flight=>`/states/all?&icao24=${flight.icao24}`)
-
-      // convert each url to a function that returns a promise
-      const funcs = urls.map(url => () => API.get(url))
-      
-      // execute Promises in serial
-      promiseSerial(funcs)
-        .then(res=>{
-          console.log("Updating Flight States")
-          return res.map(r=>r.data)
-        })  
-        .then(newFlightList=>{
-          let newFlightObjects = newFlightList.map(flight=>{
-            if(flight.states){
-              return flightArrayToObject(flight.states[0], flight.time)
-            } else {
-              return null
+      const flightList = state.flightList.map((flight)=>{
+        Object.keys(newFlights).forEach(key=>{
+          if(flight.icao24.toUpperCase() == newFlights[key][0] ){
+            if(!flight.path) flight.path = [];
+            flight.lat = newFlights[key][1];
+            flight.lng = newFlights[key][2];
+            flight.barAlt = newFlights[key][4];
+            let newPathVector = {
+              time: format(new Date(), 'HH:mm:ss'),
+              barAlt: newFlights[key][4],
+              lat: newFlights[key][1],
+              lng: newFlights[key][2],
             }
-          })
-          const newFlightObjectsCleaned = newFlightObjects.filter((obj) => obj );
-          this.setState(state=>{
-            const flightList = state.flightList.map(async (flight)=>{
-              if(!flight.path) flight.path = [];
-              let newFlightData = newFlightObjectsCleaned.find(f => f.icao24== flight.icao24)
-              if(newFlightData){
-                flight.lat = newFlightData.lat;
-                flight.lng = newFlightData.lng;
-                flight.callsign = newFlightData.callsign;
-                flight.barAlt = newFlightData.barAlt;
-                let newPathVector = {
-                  time: format(new Date(), 'HH:mm:ss'),
-                  barAlt: newFlightData.barAlt ? newFlightData.barAlt : 0,
-                  lat: newFlightData.lat,
-                  lng: newFlightData.lng,
-                }
-                flight.path.push(newPathVector);
-              }
-              return flight
-            });
-            console.log("UPDATED STATE")
-            return flightList
-          }) 
-          
-        })
-        .catch(()=>{
-          //return console.error.bind(console)
-        })
-        .then(()=>{
-          // trigger self again until this.isMounted is falsy. i know its a antipattern, but...
-          if(this.isMounted){
-            this.updateFlightList()
+            console.log("Update Flight:", flight.callsign)
+            flight.path.push(newPathVector);
           }
         })
+        return flight;
+      })
+
+      return flightList
+    });
   }
 
 
@@ -342,12 +303,10 @@ class App extends Component {
                         this is only needed bc the chartdata is in a deeply nested array. 
                         I would use redux for state management if I had more time...  */}
 
-                        {Math.random() && flight.path && 
-                          <LineChart key={Math.random()} width={300} height={150} data={flight.path}
-                                      margin={{top: 10, right: 10, left: -24, bottom: 10}}>
+                          <LineChart key={Math.random()}  width={300} height={150} data={flight.path ? flight.path : [{time: 0, barAlt:0}, {time: 1, barAlt:0} ] }
+                                      margin={{top: 10, right: 10, left: -10, bottom: 10}}>
                               <XAxis dataKey="time"/>
                               <YAxis/>
-                              {/* <CartesianGrid strokeDasharray="1 1" /> */}
                               <Tooltip 
                                   labelStyle={{
                                       background: '#262626'
@@ -357,10 +316,8 @@ class App extends Component {
                                       borderColor: '#7697AA'
                                   }}
                               />
-                              {/* <Legend /> */}
-                              <Line dot={false} type="monotone" dataKey="barAlt" stroke="#14736F" />
+                              <Line key={Math.random()} isAnimationActive={false} dot={false} type="monotone" dataKey="barAlt" stroke="#14736F" />
                           </LineChart>
-                        }
 
                 </div>
             </Flight>

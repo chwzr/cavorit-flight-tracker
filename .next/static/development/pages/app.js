@@ -258,7 +258,7 @@ var PageWrapper = function PageWrapper(Comp) {
 __webpack_require__.r(__webpack_exports__);
 var skyUrl = 'https://opensky-network.org/api';
 var proxySkyUrl = 'https://xcors.felixkoppe.com/https://opensky-network.org/api';
-var authSkyUrl = 'https://xcors.felixkoppe.com/https://chwzr:uxPLNU5PakcEE8A@opensky-network.org/api';
+var updateApi = 'https://cors.koppe.design/';
 var mapStyles = [{
   "elementType": "geometry",
   "stylers": [{
@@ -390,7 +390,7 @@ var mapStyles = [{
 var Config = {
   apiUrl: skyUrl,
   proxyApiUrl: proxySkyUrl,
-  authApiUrl: authSkyUrl,
+  authApiUrl: updateApi,
   mapStyles: mapStyles
 };
 /* harmony default export */ __webpack_exports__["default"] = (Config);
@@ -77931,8 +77931,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/promise */ "./node_modules/@babel/runtime-corejs2/core-js/promise.js");
-/* harmony import */ var _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/keys */ "./node_modules/@babel/runtime-corejs2/core-js/object/keys.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/toConsumableArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js");
 /* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
 /* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2__);
@@ -78038,6 +78038,10 @@ var API = axios__WEBPACK_IMPORTED_MODULE_21___default.a.create({
     'X-Requested-With': 'XMLHttpRequest'
   }
 });
+var updateApi = axios__WEBPACK_IMPORTED_MODULE_21___default.a.create({
+  baseURL: _config__WEBPACK_IMPORTED_MODULE_15__["default"].authApiUrl,
+  timeout: 1000
+});
 
 var App =
 /*#__PURE__*/
@@ -78123,11 +78127,15 @@ function (_Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                this.initFlightList();
-                _context.next = 3;
+                _context.next = 2;
+                return this.initFlightList();
+
+              case 2:
+                this.updatePoll = setInterval(this.updateFlightList.bind(this), 3000);
+                _context.next = 5;
                 return this.getPositionData(this.props.locationSlug ? this.props.locationSlug : "Berlin");
 
-              case 3:
+              case 5:
                 locationData = _context.sent;
 
                 if (locationData.geometry) {
@@ -78137,7 +78145,7 @@ function (_Component) {
                   });
                 }
 
-              case 5:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -78237,34 +78245,28 @@ function (_Component) {
               case 10:
                 flightAreaList = flightAreaListResponse.states.map(function (flight) {
                   return flightArrayToObject(flight, flightAreaListResponse.time);
-                }); // create the apiUrl to poll for 🚀-Track data - TODO: rewrite with axios
-                // flightAreaList.forEach(async (flight, i)=>{
-                //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
-                //   flightAreaList[i].path =  path[0] ? path : fake;
-                // });
-
+                });
                 this.setState({
                   flightList: flightAreaList
                 });
                 console.log("starting to poll for flights");
-                this.updateFlightList();
-                _context3.next = 20;
+                _context3.next = 19;
                 break;
 
-              case 16:
-                _context3.prev = 16;
+              case 15:
+                _context3.prev = 15;
                 _context3.t0 = _context3["catch"](4);
                 // console.log(error.message)
                 //retry if failed
                 console.log("retry init");
                 this.initFlightList();
 
-              case 20:
+              case 19:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[4, 16]]);
+        }, _callee3, this, [[4, 15]]);
       }));
 
       function initFlightList() {
@@ -78310,15 +78312,8 @@ function (_Component) {
               case 9:
                 flightAreaList = flightAreaListResponse.states.map(function (flight) {
                   return flightArrayToObject(flight, flightAreaListResponse.time);
-                }); //TODO: rewrite with axios
-                // flightAreaList.forEach(async (flight, i)=>{
-                //   let path = await this.updateFlightTrack(`${Config.proxyApiUrl}/tracks/?icao24=${flight.icao24}`)
-                //   if(!flightAreaList[i].path){
-                //     flightAreaList[i].path = fake;
-                //   }
-                // });
-                //remove flights which are not in bounds anymore
-                // UNCOMMENT this to keep memory footprint small... (disabling it will disable  "persistence" of chartdata when moving the map)
+                }); //remove flights which are not in bounds anymore
+                // UNCOMMENT this to keep memory footprint small... (it will disable  "persistence" of chartdata when moving items from the map)
                 // this.setState(state => {
                 //   let icaos = flightAreaList.map(f=>f.icao24);
                 //   const flightList = state.flightList.filter((f) => !icaos.includes(f.icao24));
@@ -78367,105 +78362,64 @@ function (_Component) {
       _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee6() {
         var _this2 = this;
 
-        var promiseSerial, urls, funcs;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                //dear 💩-api, eat my promise serial
-                promiseSerial = function promiseSerial(funcs) {
-                  return funcs.reduce(function (promise, func) {
-                    return promise.then(function (result) {
-                      return func().then(Array.prototype.concat.bind(result));
-                    });
-                  }, _babel_runtime_corejs2_core_js_promise__WEBPACK_IMPORTED_MODULE_0___default.a.resolve([]));
-                }; // the url's to resolve
+                this.setState(
+                /*#__PURE__*/
+                function () {
+                  var _ref = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
+                  /*#__PURE__*/
+                  _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee5(state) {
+                    var b, update, newFlights, flightList;
+                    return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee5$(_context5) {
+                      while (1) {
+                        switch (_context5.prev = _context5.next) {
+                          case 0:
+                            b = _this2.state.bounds;
+                            _context5.next = 3;
+                            return updateApi.get("".concat(b.northeast.lat, "/").concat(b.northeast.lng, "/").concat(b.southwest.lat, "/").concat(b.southwest.lng));
 
-
-                urls = this.state.flightList.map(function (flight) {
-                  return "/states/all?&icao24=".concat(flight.icao24);
-                }); // convert each url to a function that returns a promise
-
-                funcs = urls.map(function (url) {
-                  return function () {
-                    return API.get(url);
-                  };
-                }); // execute Promises in serial
-
-                promiseSerial(funcs).then(function (res) {
-                  console.log("Updating Flight States");
-                  return res.map(function (r) {
-                    return r.data;
-                  });
-                }).then(function (newFlightList) {
-                  var newFlightObjects = newFlightList.map(function (flight) {
-                    if (flight.states) {
-                      return flightArrayToObject(flight.states[0], flight.time);
-                    } else {
-                      return null;
-                    }
-                  });
-                  var newFlightObjectsCleaned = newFlightObjects.filter(function (obj) {
-                    return obj;
-                  });
-
-                  _this2.setState(function (state) {
-                    var flightList = state.flightList.map(
-                    /*#__PURE__*/
-                    function () {
-                      var _ref = Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_3__["default"])(
-                      /*#__PURE__*/
-                      _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee5(flight) {
-                        var newFlightData, newPathVector;
-                        return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee5$(_context5) {
-                          while (1) {
-                            switch (_context5.prev = _context5.next) {
-                              case 0:
-                                if (!flight.path) flight.path = [];
-                                newFlightData = newFlightObjectsCleaned.find(function (f) {
-                                  return f.icao24 == flight.icao24;
-                                });
-
-                                if (newFlightData) {
-                                  flight.lat = newFlightData.lat;
-                                  flight.lng = newFlightData.lng;
-                                  flight.callsign = newFlightData.callsign;
-                                  flight.barAlt = newFlightData.barAlt;
-                                  newPathVector = {
+                          case 3:
+                            update = _context5.sent;
+                            newFlights = update.data;
+                            flightList = state.flightList.map(function (flight) {
+                              _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0___default()(newFlights).forEach(function (key) {
+                                if (flight.icao24.toUpperCase() == newFlights[key][0]) {
+                                  if (!flight.path) flight.path = [];
+                                  flight.lat = newFlights[key][1];
+                                  flight.lng = newFlights[key][2];
+                                  flight.barAlt = newFlights[key][4];
+                                  var newPathVector = {
                                     time: Object(date_fns__WEBPACK_IMPORTED_MODULE_23__["format"])(new Date(), 'HH:mm:ss'),
-                                    barAlt: newFlightData.barAlt ? newFlightData.barAlt : 0,
-                                    lat: newFlightData.lat,
-                                    lng: newFlightData.lng
+                                    barAlt: newFlights[key][4],
+                                    lat: newFlights[key][1],
+                                    lng: newFlights[key][2]
                                   };
+                                  console.log("Update Flight:", flight.callsign);
                                   flight.path.push(newPathVector);
                                 }
+                              });
 
-                                return _context5.abrupt("return", flight);
+                              return flight;
+                            });
+                            return _context5.abrupt("return", flightList);
 
-                              case 4:
-                              case "end":
-                                return _context5.stop();
-                            }
-                          }
-                        }, _callee5);
-                      }));
+                          case 7:
+                          case "end":
+                            return _context5.stop();
+                        }
+                      }
+                    }, _callee5);
+                  }));
 
-                      return function (_x3) {
-                        return _ref.apply(this, arguments);
-                      };
-                    }());
-                    console.log("UPDATED STATE");
-                    return flightList;
-                  });
-                }).catch(function () {//return console.error.bind(console)
-                }).then(function () {
-                  // trigger self again until this.isMounted is falsy. i know its a antipattern, but...
-                  if (_this2.isMounted) {
-                    _this2.updateFlightList();
-                  }
-                });
+                  return function (_x3) {
+                    return _ref.apply(this, arguments);
+                  };
+                }());
 
-              case 4:
+              case 1:
               case "end":
                 return _context6.stop();
             }
@@ -78599,15 +78553,21 @@ function (_Component) {
           className: "hlght"
         }, "ALT"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", null, flight.geoAlt ? flight.geoAlt : 0)), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", {
           className: "hlght"
-        }, "TRANS"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", null, flight.icao24))))), Math.random() && flight.path && react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["LineChart"], {
+        }, "TRANS"), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement("td", null, flight.icao24))))), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["LineChart"], {
           key: Math.random(),
           width: 300,
           height: 150,
-          data: flight.path,
+          data: flight.path ? flight.path : [{
+            time: 0,
+            barAlt: 0
+          }, {
+            time: 1,
+            barAlt: 0
+          }],
           margin: {
             top: 10,
             right: 10,
-            left: -24,
+            left: -10,
             bottom: 10
           }
         }, react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["XAxis"], {
@@ -78621,6 +78581,8 @@ function (_Component) {
             borderColor: '#7697AA'
           }
         }), react__WEBPACK_IMPORTED_MODULE_11___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_22__["Line"], {
+          key: Math.random(),
+          isAnimationActive: false,
           dot: false,
           type: "monotone",
           dataKey: "barAlt",
